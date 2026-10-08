@@ -6,7 +6,7 @@ malicious_dir="${malicious_dir:-/home/ziad-gebril/Desktop/Anti Vairus/malicious_
 interval="${interval:-5}"
 
 interval="2"
-malicious_ex=(".exe" ".bat" ".vbs" ".scr" ".ps1")
+malicious_ex=("exe" "bat" "vbs" "scr" "ps1")
 malicious_cont=("virus" "trojan" "malware" "worm" "ransomware")
 
 
@@ -22,6 +22,14 @@ scan() {
 
         fname=$(basename "$file")
         echo $fname
+
+        ext=${fname##*.}
+        echo $ext
+        for ex in ${malicious_ex[@]}; do
+            if [ "$ext" == "$ex" ]; then
+                echo "Qurantining : $file in path $dir"
+            fi
+        done
     done
 
     cp "$info_new" "$info_last"
